@@ -1,0 +1,65 @@
+.auth{
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.auth > form {
+	width: 100%;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.auth > form > div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex-wrap: wrap;
+	padding: 5px 0;
+}
+.auth > form > div > input {
+	padding: 8px;
+}
+
+.auth input{
+	border-radius: var(--global-radius);
+	border: var(--global-border);
+}
+.auth .buttons{
+	flex-direction: row;
+	justify-content: space-between;
+	gap: 1rem;
+}
+.auth button{
+	background-color: var(--global-primary-color);
+	border-radius: var(--global-radius);
+	border: 1px solid var(--global-primary-color);
+	color: #fff;
+	padding: .5rem;
+	font-size: 1rem;
+	cursor: pointer;
+}
+.auth button:hover{
+	color: var(--global-primary-color);
+	background-color: #fff;
+}
+.auth .error{
+	color: var(--global-primary-color);
+	font-size: 0.9rem;
+}
+
+@media screen and (min-width: 600px){
+	.auth {
+		background-color: var(--global-bg-color-soft);
+	}
+	.auth > form {
+		border: var(--global-border);
+		width: 400px;
+		border-radius: var(--global-radius);
+		box-shadow: rgba(17, 12, 46, .15) 0 40px 100px 0;
+		background-color: #fff;
+	}
+
+}

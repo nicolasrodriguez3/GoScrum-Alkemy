@@ -1,5 +1,6 @@
 import { useFormik } from "formik"
 import { Link, useNavigate } from "react-router-dom"
+import "../../styles/login.styles.css"
 
 const Login = () => {
 	const navigate = useNavigate()
@@ -28,7 +29,7 @@ const Login = () => {
 	const { values, errors, handleChange, handleSubmit } = formik
 
 	return (
-		<div className="container">
+		<div className="auth">
 			<form onSubmit={handleSubmit}>
 				<h1>Iniciar sesión</h1>
 				<div>
@@ -40,7 +41,7 @@ const Login = () => {
 						value={values.email}
 						onChange={handleChange}
 					/>
-					{errors.email && <div>{errors.email}</div>}
+					{errors.email && <div className="error">{errors.email}</div>}
 				</div>
 				<div>
 					<label htmlFor="password">Contraseña</label>
@@ -51,9 +52,9 @@ const Login = () => {
 						value={values.password}
 						onChange={handleChange}
 					/>
-					{errors.password && <div>{errors.password}</div>}
+					{errors.password && <div className="error">{errors.password}</div>}
 				</div>
-				<div>
+				<div className="buttons">
 					<button type="submit">Iniciar sesión</button>
 					<Link to={"/register"}>
 						<button>Registrarse</button>
