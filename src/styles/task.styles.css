@@ -49,5 +49,19 @@
 }
 #tasks .card p{
 	color: #424242;
-	
+}
+
+@media (min-width: 900px){
+	#tasks {
+		display: flex;
+	}
+	#tasks .wrapper-list{
+		flex: 2 1;
+	}
+}
+
+@media (min-width: 1300px){
+	#tasks .wrapper-list{
+		flex: 2 1;
+	}
 }

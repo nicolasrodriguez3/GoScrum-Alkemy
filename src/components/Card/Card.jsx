@@ -1,15 +1,22 @@
-function Task() {
+function Card({ data: { title, datetime, creator, description, type, priority } }) {
+	const limitString = string => {
+		if (string.length > 170) {
+			return {string: string.substring(0, 167) + "...", addButton: true}
+		}
+		return {string: string, addButton: false}
+	}
+
 	return (
 		<div className="card">
-			<div className="close">x</div>
-			<h3>Tarea 1</h3>
-			<h6>24/01/2022 10:40</h6>
-			<h5>Nico R</h5>
-			<button>Nueva</button>
-			<button>Alta</button>
-			<p>Descripcion</p>
+			<button className="close">x</button>
+			<h3>{title}</h3>
+			<h6>{datetime}</h6>
+			<h5>{creator}</h5>
+			<button>{type}</button>
+			<button>{priority}</button>
+			<p>{limitString(description).string}</p>
 		</div>
 	)
 }
 
-export default Task
+export default Card

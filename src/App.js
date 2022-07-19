@@ -4,7 +4,7 @@ import "./App.css"
 import Login from "./components/login/Login"
 import Register from "./components/login/Register"
 import Error404 from "./components/views/Error404"
-import Task from "./components/views/Task"
+import Task from "./components/Tasks/Task"
 
 const RequireAuth = ({ children }) => {
 	if (!localStorage.getItem("token")) return <Navigate to={"/login"} replace={true} />
