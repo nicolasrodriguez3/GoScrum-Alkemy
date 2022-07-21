@@ -1,6 +1,6 @@
 import { useFormik } from "formik"
 import { Link, useNavigate } from "react-router-dom"
-import "../../styles/login.styles.css"
+import "../../../styles/auth.styles.css"
 
 const Login = () => {
 	const navigate = useNavigate()

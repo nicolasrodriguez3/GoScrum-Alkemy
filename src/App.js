@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { Routes, Route, Navigate, useLocation } from "react-router-dom"
 import "./App.css"
-import Login from "./components/login/Login"
-import Register from "./components/login/Register"
+import Login from "./components/views/auth/Login"
+import Register from "./components/views/auth/Register.jsx"
 import Error404 from "./components/views/Error404"
 import Task from "./components/Tasks/Task"
 

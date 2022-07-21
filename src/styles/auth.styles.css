@@ -19,11 +19,13 @@
 	flex-wrap: wrap;
 	padding: 5px 0;
 }
-.auth > form > div > input {
+.auth > form > div > input,
+.auth > form > div > select {
 	padding: 8px;
 }
 
-.auth input{
+.auth input,
+.auth select{
 	border-radius: var(--global-radius);
 	border: var(--global-border);
 }
@@ -45,9 +47,14 @@
 	color: var(--global-primary-color);
 	background-color: #fff;
 }
-.auth .error{
+.auth .error-text{
 	color: var(--global-primary-color);
 	font-size: 0.9rem;
+	margin-top: 4px;
+}
+.auth .error-text:before{
+	content: "❗";
+	margin-right: 0.3rem;
 }
 
 @media screen and (min-width: 600px){

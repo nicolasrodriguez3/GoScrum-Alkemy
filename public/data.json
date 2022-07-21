@@ -1,0 +1,8 @@
+{
+	"status": 200,
+	"message": "Success",
+	"result": {
+		"continent": ["América", "Europe", "Otro"],
+		"region": ["Latam", "Brasil", "America del norte", "Otro"]
+	}
+}

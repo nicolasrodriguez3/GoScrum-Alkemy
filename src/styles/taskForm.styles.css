@@ -44,6 +44,14 @@
 	background-color: #fff;
 }
 
+.task-form .error {
+	border: 1px solid var(--global-primary-color);
+}
+.task-form .error-text{
+	color:  var(--global-primary-color);
+	font-size: 0.8rem;
+}
+
 @media (min-width: 900px) {
 	.task-form {
 		flex: 1 1;
