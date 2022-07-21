@@ -1,5 +1,5 @@
 import useResize from "../../hooks/useResize"
-import Header from "../Header/Header"
+import Header from "../header/Header"
 import Card from "../Card/Card"
 import TaskForm from "../TaskForm/TaskForm"
 import { cardsData } from "./data"

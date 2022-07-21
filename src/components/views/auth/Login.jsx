@@ -1,5 +1,7 @@
 import { useFormik } from "formik"
 import { Link, useNavigate } from "react-router-dom"
+import * as Yup from "yup"
+
 import "../../../styles/auth.styles.css"
 
 const Login = () => {
@@ -9,24 +11,23 @@ const Login = () => {
 		email: "",
 		password: "",
 	}
-	const validate = (values) => {
-		const errors = {}
-		if (!values.email) {
-			errors.email = "El email es requerido"
-		}
-		if (!values.password) {
-			errors.password = "Password es requerido"
-		}
-		return errors
-	}
+
+	const validationSchema = Yup.object().shape({
+		email: Yup.string()
+			.email("El email no es válido")
+			.required("El email es requerido"),
+		password: Yup.string()
+			.min(8, "La contraseña debe tener al menos 8 caracteres")
+			.required("La contraseña es requerida"),
+	})
 
 	const onSubmit = () => {
 		localStorage.setItem("token", "yes")
 		navigate("/", { replace: true })
 	}
 
-	const formik = useFormik({ initialValues, validate, onSubmit })
-	const { values, errors, handleChange, handleSubmit } = formik
+	const formik = useFormik({ initialValues, validationSchema, onSubmit })
+	const { values, errors, touched, handleBlur, handleChange, handleSubmit } = formik
 
 	return (
 		<div className="auth">
@@ -35,24 +36,30 @@ const Login = () => {
 				<div>
 					<label htmlFor="email">Email</label>
 					<input
+						className={errors.email && touched.email ? "error" : ""}
 						type="email"
 						name="email"
 						id="email"
 						value={values.email}
 						onChange={handleChange}
+						onBlur={handleBlur}
 					/>
-					{errors.email && <div className="error">{errors.email}</div>}
+					{errors.email && touched.email && <div className="error-text">{errors.email}</div>}
 				</div>
 				<div>
 					<label htmlFor="password">Contraseña</label>
 					<input
+						className={errors.password && touched.password ? "error" : ""}
 						type="password"
 						name="password"
 						id="password"
 						value={values.password}
 						onChange={handleChange}
+						onBlur={handleBlur}
 					/>
-					{errors.password && <div className="error">{errors.password}</div>}
+					{errors.password && touched.password && (
+						<div className="error-text">{errors.password}</div>
+					)}
 				</div>
 				<div className="buttons">
 					<button type="submit">Iniciar sesión</button>

@@ -47,6 +47,9 @@
 	color: var(--global-primary-color);
 	background-color: #fff;
 }
+.auth .error{
+	border: 1px solid var(--global-primary-color);
+}
 .auth .error-text{
 	color: var(--global-primary-color);
 	font-size: 0.9rem;

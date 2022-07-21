@@ -2,6 +2,9 @@ import { useFormik } from "formik"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import * as Yup from "yup"
+import { v4 as uuidv4 } from "uuid"
+import { Switch, FormControlLabel } from "@mui/material"
+
 import "../../../styles/auth.styles.css"
 
 const Register = () => {
@@ -11,9 +14,11 @@ const Register = () => {
 		username: "",
 		email: "",
 		password: "",
+		teamId: "",
 		role: "Team-Member",
 		continent: "",
 		region: "",
+		switch: false,
 	}
 
 	const validationSchema = Yup.object().shape({
@@ -29,12 +34,17 @@ const Register = () => {
 		region: Yup.string().required("La región es requerida"),
 	})
 
+	const handleContinent = (value) => {
+		setFieldValue("continent", value)
+		if( value !== "América") setFieldValue("region", "Otro")
+	}
+
 	const onSubmit = (values) => {
 		console.log(values)
 	}
 
 	const formik = useFormik({ initialValues, validationSchema, onSubmit })
-	const { values, errors, touched, handleChange, handleSubmit, handleBlur } = formik
+	const { values, errors, touched, handleChange, handleSubmit, handleBlur, setFieldValue } = formik
 
 	useEffect(() => {
 		const getData = async (URL) => {
@@ -94,17 +104,24 @@ const Register = () => {
 						<div className="error-text">{errors.password}</div>
 					)}
 				</div>
-
 				<div>
+					<FormControlLabel
+						control={<Switch checked={values.switch} onChange={handleChange} name="switch" />}
+						label="¿Perteneces a un equipo ya creado?"
+					/>
+				</div>
+				{values.switch && (
+				<div>
+					<label htmlFor="teamId">Identificador de equipo</label>
 					<input
-						type="hidden"
+						type="text"
 						name="teamID"
 						id="teamID"
-						value={"9cdfc108-f8f8-4f8f-8f8f-8f8f8f8f8f8f"}
+						value={values.teamId}
 						onChange={handleChange}
 					/>
 				</div>
-
+				)}
 				<div>
 					<label htmlFor="role">Rol</label>
 					<select
@@ -126,7 +143,7 @@ const Register = () => {
 						name="continent"
 						id="continent"
 						value={values.continent}
-						onChange={handleChange}
+						onChange={(e) => handleContinent(e.target.value)}
 						onBlur={handleBlur}
 						className={errors.continent && touched.continent ? "error" : ""}>
 						<option value="">Seleccione continente</option>
