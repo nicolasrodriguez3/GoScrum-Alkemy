@@ -7,14 +7,41 @@
 	height: calc(100vh - 100px);
 	padding: 10px;
 	box-shadow: 0 2px 5px #dbdbdb;
+  margin-top: 15px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
+
+#tasks .wrapper-list::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+#tasks .wrapper-list::-webkit-scrollbar:vertical {
+  width: 10px;
+}
+
+#tasks .wrapper-list::-webkit-scrollbar-button:increment,
+#tasks .wrapper-list::-webkit-scrollbar-button {
+  display: none;
+}
+
+#tasks .wrapper-list::-webkit-scrollbar-thumb {
+  background-color: #797979;
+  border-radius: 20px;
+  border: 2px solid #f1f2f3;
+}
+
+#tasks .wrapper-list::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
 #tasks .wrapper-list h2{
 	font-size: 1.2rem;
 }
 #tasks .wrapper-list .list-group {
   display: flex;
   flex-direction: row;
-  gap: 5px 10px;
+  gap: 10px;
 }
 
 #tasks .wrapper-list .list-group .list {
@@ -71,12 +98,12 @@
 		display: flex;
 	}
 	#tasks .wrapper-list{
-		flex: 2 1;
+		flex: 2 1 150px;
 	}
 }
 
 @media (min-width: 1300px){
 	#tasks .wrapper-list{
-		flex: 2 1;
+		flex: 3 1;
 	}
 }

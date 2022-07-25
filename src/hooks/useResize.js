@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 
 export default function useResize() {
-	const [isPhone, setIsPhone] = useState(window.innerWidth < 768)
+	const [isPhone, setIsPhone] = useState(window.innerWidth < 900)
 
 	const handleResize = () => {
-		setIsPhone(window.innerWidth < 768)
+		setIsPhone(window.innerWidth < 900)
 	}
 	useEffect(() => {
 		handleResize()

@@ -7,13 +7,17 @@ export default function Header() {
 
 	const handleLogout = () => {
 		localStorage.removeItem("token")
+		localStorage.removeItem("userName")
 		navigate("/login", { replace: true })
 	}
 
 	return (
 		<header>
 			<span>GoScrum</span>
-			<button onClick={handleLogout}>x</button>
+			<div className="wrapper-right-header">
+				<span>{localStorage.getItem("userName")}</span>
+				<button onClick={handleLogout}>Cerrar sesión</button>
+			</div>
 		</header>
 	)
 }
