@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react"
 import useResize from "../../hooks/useResize"
-import Header from "../Header/Header"
+import Header from "../header/Header"
 import Card from "../Card/Card"
 import TaskForm from "../TaskForm/TaskForm"
 
 import "../../styles/task.styles.css"
+import { Skeleton } from "@mui/material"
 
 const { REACT_APP_API_ENDPOINT: API_ENDPOINT } = process.env
 
-function Task(props) {
-	const [list, setList] = useState([])
+function Task() {
+	const [list, setList] = useState(null)
+	const [isLoading, setIsLoading] = useState(true)
+
 	const { isPhone } = useResize()
 
 	useEffect(() => {
@@ -21,7 +24,10 @@ function Task(props) {
 			},
 		})
 			.then((res) => res.json())
-			.then((data) => setList(data.result))
+			.then((data) => {
+				setList(data.result)
+				setIsLoading(false)
+			})
 	}, [])
 
 	const renderAllCards = () => {
@@ -53,22 +59,42 @@ function Task(props) {
 						<h2>Mis tareas</h2>
 					</div>
 					{isPhone ? (
-						renderAllCards()
+						isLoading ? (
+							<>
+								<Skeleton width={300} height={40} />
+								<Skeleton width={200} height={100} />
+							</>
+						) : list?.length === 0 ? (
+							<div>No hay tareas creadas</div>
+						) : (
+							<div className="list phone">{renderAllCards()}</div>
+						)
+					) : isLoading ? (
+						<div>
+							<Skeleton width={300} height={40} />
+							<Skeleton width={200} height={150} />
+						</div>
 					) : (
-						<>
-							<div className="list">
-								<h4>Nuevas</h4>
-								{renderNewCards()}
-							</div>
-							<div className="list">
-								<h4>En proceso</h4>
-								{renderInProgressCards()}
-							</div>
-							<div className="list">
-								<h4>Finalizadas</h4>
-								{renderFinishedCards()}
-							</div>
-						</>
+						<div className="list-group">
+							{list?.length === 0 ? (
+								<div>No hay tareas creadas</div>
+							) : (
+								<div>
+									<div className="list">
+										<h4>Nuevas</h4>
+										{renderNewCards()}
+									</div>
+									<div className="list">
+										<h4>En proceso</h4>
+										{renderInProgressCards()}
+									</div>
+									<div className="list">
+										<h4>Finalizadas</h4>
+										{renderFinishedCards()}
+									</div>
+								</div>
+							)}
+						</div>
 					)}
 				</section>
 			</main>

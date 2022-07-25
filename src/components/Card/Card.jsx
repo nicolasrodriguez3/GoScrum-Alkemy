@@ -10,10 +10,10 @@ function Card({ data: { title, createdAt, user, description, status, importance 
 		<div className="card">
 			<button className="close">x</button>
 			<h3>{title}</h3>
-			<h6>{createdAt}</h6>
+			<h6>{new Date(createdAt).toLocaleString()}</h6>
 			<h5>{user.userName}</h5>
-			<button>{status}</button>
-			<button>{importance}</button>
+			<button>{status.toLowerCase()}</button>
+			<button>{importance.toLowerCase()}</button>
 			<p>{limitString(description).string}</p>
 		</div>
 	)

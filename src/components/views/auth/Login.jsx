@@ -1,6 +1,6 @@
 import { useFormik } from "formik"
 import { Link, useNavigate } from "react-router-dom"
-import Swal from "sweetalert2"
+import { Swal } from "sweetalert2"
 import * as Yup from "yup"
 
 import "../../../styles/auth.styles.css"
@@ -19,7 +19,7 @@ const Login = () => {
 	const validationSchema = Yup.object().shape({
 		userName: Yup.string().required("El nombre de usuario es requerido"),
 		password: Yup.string()
-			.min(6, "La contraseña debe tener al menos 6 caracteres")
+			.min(4, "La contraseña debe tener al menos 4 caracteres")
 			.required("La contraseña es requerida"),
 	})
 
