@@ -92,6 +92,33 @@
 #tasks .card p{
 	color: #424242;
 }
+#tasks .card button.finished{
+	background-color: #1ec876;
+	border: 1px solid #1ec876;
+}
+#tasks .card button.finished:hover{
+	background-color: #fff;
+	color: #1ec876;
+}
+#tasks .card button.low{
+	background-color: #007bff;
+	border: 1px solid #007bff;
+}
+#tasks .card button.low:hover{
+	background-color: #fff;
+	color: #007bff;
+}
+#tasks .card button.medium,
+#tasks .card button.progress{
+	background-color: #ffc107;
+	border: 1px solid #ffc107;
+	color: #000;
+}
+#tasks .card button.medium:hover,
+#tasks .card button.progress:hover{
+	background-color: #000;
+	color: #ffc107;
+}
 
 @media (min-width: 900px){
 	#tasks {
