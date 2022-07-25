@@ -11,6 +11,21 @@
 #tasks .wrapper-list h2{
 	font-size: 1.2rem;
 }
+#tasks .wrapper-list .list-group {
+  display: flex;
+  flex-direction: row;
+  gap: 5px 10px;
+}
+
+#tasks .wrapper-list .list-group .list {
+  flex: 1;
+  border-radius: var(--global-radius);
+  padding: 10px;
+  height: 100%;
+  box-shadow: 0 2px 5px #dbdbdb;
+  background-color: white;
+}
+
 #tasks .card{
 	background-color: #fff;
 	border-radius: 12px;

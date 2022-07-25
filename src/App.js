@@ -5,6 +5,7 @@ import Login from "./components/views/auth/Login"
 import Register from "./components/views/auth/Register.jsx"
 import Error404 from "./components/views/Error404"
 import Task from "./components/Tasks/Task"
+import Registered from "./components/views/Registered/Registered"
 
 const RequireAuth = ({ children }) => {
 	if (!localStorage.getItem("token")) return <Navigate to={"/login"} replace={true} />
@@ -53,6 +54,18 @@ const App = () => {
 							exit={{ opacity: 0 }}
 							transition={{ duration: 0.5 }}>
 							<Register />
+						</motion.div>
+					}
+				/>
+				<Route
+					path="/registered/:teamID"
+					element={
+						<motion.div
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+							transition={{ duration: 0.5 }}>
+							<Registered />
 						</motion.div>
 					}
 				/>

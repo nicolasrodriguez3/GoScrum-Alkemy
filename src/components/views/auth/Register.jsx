@@ -1,28 +1,32 @@
 import { useFormik } from "formik"
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import * as Yup from "yup"
 import { v4 as uuidv4 } from "uuid"
 import { Switch, FormControlLabel } from "@mui/material"
 
 import "../../../styles/auth.styles.css"
 
+const { REACT_APP_API_ENDPOINT: API_ENDPOINT } = process.env
+
 const Register = () => {
 	const [data, setData] = useState({})
 
+	const navigate = useNavigate()
+
 	const initialValues = {
-		username: "",
+		userName: "",
 		email: "",
 		password: "",
 		teamId: "",
-		role: "Team-Member",
+		role: "Team Member",
 		continent: "",
 		region: "",
 		switch: false,
 	}
 
 	const validationSchema = Yup.object().shape({
-		username: Yup.string()
+		userName: Yup.string()
 			.min(4, "Ingrese al menos 4 caracteres")
 			.required("El nombre de usuario es requerido"),
 		email: Yup.string().email("El email no es válido").required("El email es requerido"),
@@ -36,11 +40,36 @@ const Register = () => {
 
 	const handleContinent = (value) => {
 		setFieldValue("continent", value)
-		if( value !== "América") setFieldValue("region", "Otro")
+		if (value !== "América") setFieldValue("region", "Otro")
 	}
 
 	const onSubmit = (values) => {
+		const teamID = values.teamId || uuidv4()
 		console.log(values)
+		const { userName, email, password, role, continent, region } = values
+
+		fetch(`${API_ENDPOINT}auth/register`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				user: {
+					userName,
+					email,
+					password,
+					teamID,
+					role,
+					continent,
+					region,
+				},
+			}),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				navigate(`/registered/${data?.result?.user.teamID}`, { replace: true })
+			})
+			.catch((err) => console.log(err))
 	}
 
 	const formik = useFormik({ initialValues, validationSchema, onSubmit })
@@ -52,7 +81,7 @@ const Register = () => {
 			const data = await res.json()
 			setData(data.result)
 		}
-		getData("data.json")
+		getData(API_ENDPOINT + "auth/data")
 	}, [])
 
 	return (
@@ -62,16 +91,16 @@ const Register = () => {
 				<div>
 					<label htmlFor="username">Nombre de usuario</label>
 					<input
-						className={errors.username && touched.username ? "error" : ""}
+						className={errors.userName && touched.userName ? "error" : ""}
 						type="text"
-						name="username"
+						name="userName"
 						id="username"
-						value={values.username}
+						value={values.userName}
 						onChange={handleChange}
 						onBlur={handleBlur}
 					/>
-					{errors.username && touched.username && (
-						<div className="error-text">{errors.username}</div>
+					{errors.userName && touched.userName && (
+						<div className="error-text">{errors.userName}</div>
 					)}
 				</div>
 
@@ -111,16 +140,16 @@ const Register = () => {
 					/>
 				</div>
 				{values.switch && (
-				<div>
-					<label htmlFor="teamId">Identificador de equipo</label>
-					<input
-						type="text"
-						name="teamID"
-						id="teamID"
-						value={values.teamId}
-						onChange={handleChange}
-					/>
-				</div>
+					<div>
+						<label htmlFor="teamId">Identificador de equipo</label>
+						<input
+							type="text"
+							name="teamID"
+							id="teamID"
+							value={values.teamId}
+							onChange={handleChange}
+						/>
+					</div>
 				)}
 				<div>
 					<label htmlFor="role">Rol</label>
@@ -131,8 +160,11 @@ const Register = () => {
 						onChange={handleChange}
 						onBlur={handleBlur}
 						className={errors.role && touched.role ? "error" : ""}>
-						<option value="Team-Member">Team Member</option>
-						<option value="Team-Leader">Team Leader</option>
+						{data?.Rol?.map((rol) => (
+							<option key={rol} value={rol}>
+								{rol}
+							</option>
+						))}
 					</select>
 					{errors.role && touched.role && <div className="error-text">{errors.role}</div>}
 				</div>
@@ -147,7 +179,7 @@ const Register = () => {
 						onBlur={handleBlur}
 						className={errors.continent && touched.continent ? "error" : ""}>
 						<option value="">Seleccione continente</option>
-						{data?.continent?.map((continent) => (
+						{data?.continente?.map((continent) => (
 							<option key={continent} value={continent}>
 								{continent}
 							</option>
@@ -158,7 +190,7 @@ const Register = () => {
 					)}
 				</div>
 
-				{values.continent === "América" && (
+				{values.continent === "America" && (
 					<div>
 						<label htmlFor="region">Región</label>
 						<select

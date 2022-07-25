@@ -1,29 +1,50 @@
 import { useFormik } from "formik"
 import { Link, useNavigate } from "react-router-dom"
+import Swal from "sweetalert2"
 import * as Yup from "yup"
 
 import "../../../styles/auth.styles.css"
+import { swal } from "../../../utils/swal"
+
+const { REACT_APP_API_ENDPOINT: API_ENDPOINT } = process.env
 
 const Login = () => {
 	const navigate = useNavigate()
 
 	const initialValues = {
-		email: "",
+		userName: "",
 		password: "",
 	}
 
 	const validationSchema = Yup.object().shape({
-		email: Yup.string()
-			.email("El email no es válido")
-			.required("El email es requerido"),
+		userName: Yup.string().required("El nombre de usuario es requerido"),
 		password: Yup.string()
-			.min(8, "La contraseña debe tener al menos 8 caracteres")
+			.min(6, "La contraseña debe tener al menos 6 caracteres")
 			.required("La contraseña es requerida"),
 	})
 
 	const onSubmit = () => {
-		localStorage.setItem("token", "yes")
-		navigate("/", { replace: true })
+		const { userName, password } = values
+
+		fetch(`${API_ENDPOINT}auth/login`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				userName,
+				password,
+			}),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.status_code === 200) {
+					localStorage.setItem("token", data.result.token)
+					navigate("/", { replace: true })
+				} else {
+					swal("Credenciales inválidas")
+				}
+			})
 	}
 
 	const formik = useFormik({ initialValues, validationSchema, onSubmit })
@@ -34,17 +55,19 @@ const Login = () => {
 			<form onSubmit={handleSubmit}>
 				<h1>Iniciar sesión</h1>
 				<div>
-					<label htmlFor="email">Email</label>
+					<label htmlFor="userName">Nombre de usuario</label>
 					<input
-						className={errors.email && touched.email ? "error" : ""}
-						type="email"
-						name="email"
-						id="email"
-						value={values.email}
+						className={errors.userName && touched.userName ? "error" : ""}
+						type="text"
+						name="userName"
+						id="userName"
+						value={values.userName}
 						onChange={handleChange}
 						onBlur={handleBlur}
 					/>
-					{errors.email && touched.email && <div className="error-text">{errors.email}</div>}
+					{errors.userName && touched.userName && (
+						<div className="error-text">{errors.userName}</div>
+					)}
 				</div>
 				<div>
 					<label htmlFor="password">Contraseña</label>
