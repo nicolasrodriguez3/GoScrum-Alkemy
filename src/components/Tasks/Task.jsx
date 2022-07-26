@@ -6,7 +6,7 @@ import TaskForm from "../TaskForm/TaskForm"
 import { Skeleton, FormControl, RadioGroup, FormControlLabel, Radio } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
 import debounce from "lodash/debounce"
-import { getTasks } from "../../store/actions/taskAction"
+import { getTasks, deleteTask, editCardStatus } from "../../store/actions/taskAction"
 
 import "../../styles/task.styles.css"
 
@@ -49,12 +49,12 @@ function Task() {
 	}
 
 	const renderAllCards = () => {
-		return renderList?.map((card) => <Card key={card._id} data={card} />)
+		return renderList?.map((card) => <Card key={card._id} data={card} deleteCard={handleDelete} editCardStatus={handleCardStatus} />)
 	}
 	const renderColumnCards = (text) => {
 		return renderList
 			?.filter((data) => data.status === text)
-			.map((card) => <Card key={card._id} data={card} />)
+			.map((card) => <Card key={card._id} data={card} deleteCard={handleDelete} editCardStatus={handleCardStatus} />)
 	}
 
 	const handleChangeImportance = (e) => {
@@ -65,6 +65,10 @@ function Task() {
 	const handleSearch = debounce((e) => {
 		setSearch(e?.target?.value)
 	}, 1000)
+
+	const handleDelete = (id) => dispatch(deleteTask(id))
+
+	const handleCardStatus = (data) => dispatch(editCardStatus(data))
 
 	return (
 		<>
