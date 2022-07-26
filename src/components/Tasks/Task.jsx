@@ -4,53 +4,54 @@ import Header from "../header/Header"
 import Card from "../Card/Card"
 import TaskForm from "../TaskForm/TaskForm"
 import { Skeleton, FormControl, RadioGroup, FormControlLabel, Radio } from "@mui/material"
+import { useDispatch, useSelector } from "react-redux"
 import debounce from "lodash/debounce"
+import { getTasks } from "../../store/actions/taskAction"
 
 import "../../styles/task.styles.css"
-
-const { REACT_APP_API_ENDPOINT: API_ENDPOINT } = process.env
 
 function Task() {
 	const [list, setList] = useState(null)
 	const [renderList, setRenderList] = useState(null)
 	const [taskFromWho, setTaskFromWho] = useState("ALL")
 	const [search, setSearch] = useState("")
-	const [isLoading, setIsLoading] = useState(true)
 
 	const { isPhone } = useResize()
 
-	useEffect(() => {
-		setIsLoading(true)
-		const tasksOwner = taskFromWho === "ME" ? "/me" : ""
-		fetch(`${API_ENDPOINT}task${tasksOwner}`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${localStorage.getItem("token")}`,
-			},
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				setList(data.result)
-				setRenderList(data.result)
-				setIsLoading(false)
-			})
-	}, [taskFromWho])
+	const dispatch = useDispatch()
 
 	useEffect(() => {
-		if(search){
-			const filteredList = list.filter(task => task.title.toLowerCase().includes(search.toLowerCase()))
-			setRenderList(filteredList)
+		dispatch(getTasks(taskFromWho === "ME" ? "/me" : ""))
+	}, [taskFromWho])
+
+	const { loading, error, tasks } = useSelector((state) => state.taskReducer)
+
+	useEffect(() => {
+		if (tasks?.length) {
+			setList(tasks)
+			setRenderList(tasks)
 		}
-		else{
+	}, [tasks])
+
+	useEffect(() => {
+		if (search) {
+			const filteredList = list.filter((task) =>
+				task.title.toLowerCase().includes(search.toLowerCase())
+			)
+			setRenderList(filteredList)
+		} else {
 			setRenderList(list)
 		}
 	}, [search])
 
+	if(error){
+		return <div>Ocurrio un error</div>
+	}
+
 	const renderAllCards = () => {
 		return renderList?.map((card) => <Card key={card._id} data={card} />)
 	}
-	const renderColumnCards = ( text ) => {
+	const renderColumnCards = (text) => {
 		return renderList
 			?.filter((data) => data.status === text)
 			.map((card) => <Card key={card._id} data={card} />)
@@ -88,11 +89,7 @@ function Task() {
 							</RadioGroup>
 						</FormControl>
 						<div className="search">
-							<input
-								type="search"
-								placeholder="Buscar por título..."
-								onChange={handleSearch}
-							/>
+							<input type="search" placeholder="Buscar por título..." onChange={handleSearch} />
 						</div>
 						<div>
 							<label htmlFor="importance">Prioridad</label>
@@ -105,7 +102,7 @@ function Task() {
 						</div>
 					</div>
 					{isPhone ? (
-						isLoading ? (
+						loading ? (
 							<>
 								<Skeleton width={300} height={40} />
 								<Skeleton width={200} height={100} />
@@ -115,7 +112,7 @@ function Task() {
 						) : (
 							<div className="list phone">{renderAllCards()}</div>
 						)
-					) : isLoading ? (
+					) : loading ? (
 						<div>
 							<Skeleton width={300} height={40} />
 							<Skeleton width={200} height={150} />
