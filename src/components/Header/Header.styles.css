@@ -9,5 +9,22 @@ header > img{
 }
 .wrapper-right-header{
 	display: flex;
+	align-items: center;
 	gap: 10px;
+}
+
+button{
+	background-color: var(--global-primary-color);
+	border-radius: var(--global-radius);
+	border: 1px solid var(--global-primary-color);
+	color: #fff;
+	padding: .2rem .5rem;
+	font-size: 1rem;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all .2s ease-in-out;
+}
+button:hover{
+	color: var(--global-primary-color);
+	background-color: #fff;
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import useResize from "../../hooks/useResize"
-import Header from "../header/Header"
+import Header from "../Header/Header"
 import Card from "../Card/Card"
 import TaskForm from "../TaskForm/TaskForm"
 import { Skeleton, FormControl, RadioGroup, FormControlLabel, Radio } from "@mui/material"
@@ -84,6 +84,7 @@ function Task() {
 						<FormControl>
 							<RadioGroup
 								row
+								defaultValue="ALL"
 								aria-labelledby="demo-row-radio-buttons-group-label"
 								onChange={(e) => {
 									setTaskFromWho(e.target.value)
@@ -95,7 +96,7 @@ function Task() {
 						<div className="search">
 							<input type="search" placeholder="Buscar por título..." onChange={handleSearch} />
 						</div>
-						<div>
+						<div className="filter-priority">
 							<label htmlFor="importance">Prioridad</label>
 							<select name="importance" id="importance" onChange={handleChangeImportance}>
 								<option value="ALL">Todas</option>

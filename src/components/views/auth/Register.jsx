@@ -31,7 +31,7 @@ const Register = () => {
 			.required("El nombre de usuario es requerido"),
 		email: Yup.string().email("El email no es válido").required("El email es requerido"),
 		password: Yup.string()
-			.min(8, "La contraseña debe tener al menos 8 caracteres")
+			.min(6, "La contraseña debe tener al menos 6 caracteres")
 			.required("La contraseña es requerida"),
 		role: Yup.string().required("El rol es requerido"),
 		continent: Yup.string().required("El continente es requerido"),
@@ -214,7 +214,7 @@ const Register = () => {
 				<div className="buttons">
 					<button type="submit">Registrarse</button>
 					<Link to={"/login"}>
-						<button>Iniciar sesión</button>
+						<button className="secondary">Iniciar sesión</button>
 					</Link>
 				</div>
 			</form>

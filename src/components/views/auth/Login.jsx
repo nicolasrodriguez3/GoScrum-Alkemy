@@ -1,6 +1,5 @@
 import { useFormik } from "formik"
 import { Link, useNavigate } from "react-router-dom"
-import { Swal } from "sweetalert2"
 import * as Yup from "yup"
 
 import "../../../styles/auth.styles.css"
@@ -87,10 +86,11 @@ const Login = () => {
 				</div>
 				<div className="buttons">
 					<button type="submit">Iniciar sesión</button>
-					<Link to={"/register"}>
-						<button>Registrarse</button>
-					</Link>
 				</div>
+				<p>
+					¿No tenes cuenta? <Link to="/register" className="secondary">Registrate</Link>
+
+				</p>
 			</form>
 		</div>
 	)

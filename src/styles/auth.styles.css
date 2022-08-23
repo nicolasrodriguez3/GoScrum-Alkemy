@@ -33,6 +33,7 @@
 	flex-direction: row;
 	justify-content: space-between;
 	gap: 1rem;
+	margin-bottom: 8px;
 }
 .auth button{
 	background-color: var(--global-primary-color);
@@ -41,11 +42,28 @@
 	color: #fff;
 	padding: .5rem;
 	font-size: 1rem;
+	font-weight: bold;
 	cursor: pointer;
+	transition: all .2s ease-in-out;
 }
 .auth button:hover{
 	color: var(--global-primary-color);
 	background-color: #fff;
+}
+
+button.secondary{
+	color: var(--global-primary-color);
+	font-family: inherit;
+	display: inline;
+	transition: all .2s ease-in-out;
+	padding: .5rem;
+	border-radius: 4px;
+	background-color: #fff;
+	border: none;
+}
+button.secondary:hover{
+	background-color: var(--global-primary-color);
+	color: #fff;
 }
 .auth .error{
 	border: 1px solid var(--global-primary-color);

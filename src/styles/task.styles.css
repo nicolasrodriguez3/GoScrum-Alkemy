@@ -92,6 +92,10 @@
 #tasks .card p{
 	color: #424242;
 }
+#tasks .card button.new:hover{
+	background-color: #fff;
+	color: var(--global-primary-color);
+}
 #tasks .card button.finished{
 	background-color: #1ec876;
 	border: 1px solid #1ec876;
